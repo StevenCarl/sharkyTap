@@ -61,7 +61,7 @@ public class OnBoardingAppActivity extends AppCompatActivity {
 
     public void addDotsIndicator(int position){
 
-        mdots = new TextView[3];
+        mdots = new TextView[4];
         mDotLayout.removeAllViews();
 
         for (int i = 0; i < mdots.length; i++){
@@ -104,8 +104,15 @@ public class OnBoardingAppActivity extends AppCompatActivity {
                 mBackBtn.setVisibility(View.VISIBLE);
 
                 mNextBtn.setText("");
+                mBackBtn.setText("Avoid");
+            }else if (i == mdots.length-2){
+                mNextBtn.setEnabled(true);
+                mBackBtn.setEnabled(true);
+                mBackBtn.setVisibility(View.VISIBLE);
+                mNextBtn.setText("Timer");
                 mBackBtn.setText("Points");
-            }else {
+            }
+            else {
                 mNextBtn.setEnabled(true);
                 mBackBtn.setEnabled(true);
                 mBackBtn.setVisibility(View.VISIBLE);

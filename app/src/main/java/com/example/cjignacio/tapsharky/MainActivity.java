@@ -1,5 +1,6 @@
 package com.example.cjignacio.tapsharky;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Point;
 import android.media.MediaPlayer;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -113,6 +116,9 @@ public class MainActivity extends AppCompatActivity {
     private boolean action_flg = false;
     private boolean start_flg = false;
     private boolean pause_flg = false;
+
+    //Log
+    private static final String TRIVIA = "triviaTag";
 
     private CountDownTimer countDownTimer;
 
@@ -226,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
 //        Log.v("SPEED_FISHY2",fishy2Speed+"");
 //        Log.v("SPEED_POISON",poisonSpeed+"");
 
-
+        triviaShow();
         scoreLabel.setText("Score: 0");
         createTimer();
 
@@ -460,7 +466,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (0 <= fishy1CenterX && fishy1CenterX <= sharkSize &&
                 sharkY <= fishy1CenterY && fishy1CenterY <= sharkY + sharkSize) {
-            score += 1;
+            score += 5;
             fishy1X = -10;
             sound.playeatSound();
         }
@@ -473,6 +479,111 @@ public class MainActivity extends AppCompatActivity {
                 sharkY <= fishy2CenterY && fishy2CenterY <= sharkY + sharkSize) {
             score += 20;
             fishy2X = -10;
+            sound.playeatSound();
+        }
+
+        //Fishy3
+
+        int fishy3CenterX = fishy3X + fishy3.getWidth() / 2;
+        int fishy3CenterY = fishy3Y + fishy3.getHeight() / 2;
+
+        // 0 <= fishyCenterX <= sharkWidth
+        // sharkY <= fishyCenterX <= sharkY + sharkHeight
+
+        if (0 <= fishy3CenterX && fishy3CenterX <= sharkSize &&
+                sharkY <= fishy3CenterY && fishy3CenterY <= sharkY + sharkSize) {
+            score += 15;
+            fishy3X = -10;
+            sound.playeatSound();
+        }
+
+        //Fishy4
+
+        int fishy4CenterX = fishy4X + fishy4.getWidth() / 2;
+        int fishy4CenterY = fishy4Y + fishy4.getHeight() / 2;
+
+        // 0 <= fishyCenterX <= sharkWidth
+        // sharkY <= fishyCenterX <= sharkY + sharkHeight
+
+        if (0 <= fishy4CenterX && fishy4CenterX <= sharkSize &&
+                sharkY <= fishy4CenterY && fishy4CenterY <= sharkY + sharkSize) {
+            score += 1;
+            fishy4X = -10;
+            sound.playeatSound();
+        }
+
+        //Fishy5
+
+        int fishy5CenterX = fishy5X + fishy5.getWidth() / 2;
+        int fishy5CenterY = fishy5Y + fishy5.getHeight() / 2;
+
+        // 0 <= fishyCenterX <= sharkWidth
+        // sharkY <= fishyCenterX <= sharkY + sharkHeight
+
+        if (0 <= fishy5CenterX && fishy5CenterX <= sharkSize &&
+                sharkY <= fishy5CenterY && fishy5CenterY <= sharkY + sharkSize) {
+            score += 10;
+            fishy5X = -10;
+            sound.playeatSound();
+        }
+
+        //Fishy6
+
+        int fishy6CenterX = fishy6X + fishy6.getWidth() / 2;
+        int fishy6CenterY = fishy6Y + fishy6.getHeight() / 2;
+
+        // 0 <= fishyCenterX <= sharkWidth
+        // sharkY <= fishyCenterX <= sharkY + sharkHeight
+
+        if (0 <= fishy6CenterX && fishy6CenterX <= sharkSize &&
+                sharkY <= fishy6CenterY && fishy6CenterY <= sharkY + sharkSize) {
+            score += 30;
+            fishy6X = -10;
+            sound.playeatSound();
+        }
+
+        //Fishy7
+
+        int fishy7CenterX = fishy7X + fishy7.getWidth() / 2;
+        int fishy7CenterY = fishy7Y + fishy7.getHeight() / 2;
+
+        // 0 <= fishyCenterX <= sharkWidth
+        // sharkY <= fishyCenterX <= sharkY + sharkHeight
+
+        if (0 <= fishy7CenterX && fishy7CenterX <= sharkSize &&
+                sharkY <= fishy7CenterY && fishy7CenterY <= sharkY + sharkSize) {
+            score += 25;
+            fishy7X = -10;
+            sound.playeatSound();
+        }
+
+        //Fishy8
+
+        int fishy8CenterX = fishy8X + fishy8.getWidth() / 2;
+        int fishy8CenterY = fishy8Y + fishy8.getHeight() / 2;
+
+        // 0 <= fishyCenterX <= sharkWidth
+        // sharkY <= fishyCenterX <= sharkY + sharkHeight
+
+        if (0 <= fishy8CenterX && fishy8CenterX <= sharkSize &&
+                sharkY <= fishy8CenterY && fishy8CenterY <= sharkY + sharkSize) {
+            score += 35;
+            fishy8X = -10;
+            sound.playeatSound();
+        }
+
+        //Fishy9
+
+        int fishy9CenterX = fishy9X + fishy9.getWidth() / 2;
+        int fishy9CenterY = fishy9Y + fishy9.getHeight() / 2;
+
+        // 0 <= fishyCenterX <= sharkWidth
+        // sharkY <= fishyCenterX <= sharkY + sharkHeight
+
+        if (0 <= fishy9CenterX && fishy9CenterX <= sharkSize &&
+                sharkY <= fishy9CenterY && fishy9CenterY <= sharkY + sharkSize) {
+            score += 40;
+            fishy9X = -10;
             sound.playeatSound();
         }
 
@@ -501,12 +612,36 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        //Poison
+        int pufferCenterX = pufferX + puffer.getWidth() / 2;
+        int pufferCenterY = pufferY + puffer.getHeight() / 2;
+
+        if (0 <= pufferCenterX && pufferCenterX <= sharkSize &&
+                sharkY <= pufferCenterY && pufferCenterY <= sharkY + sharkSize) {
+
+            //Temporary!
+            //            score +=10;
+            //            poisonX = -10;
+            timer.cancel();
+            // timer = null;
+
+            sound.playhitSound();
+
+            sp.stop();
+
+            // Show ResultActivity
+            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+            intent.putExtra("SCORE", score);
+
+            startActivity(intent);
+
+        }
+
 
     }
 
 
     public boolean onTouchEvent(MotionEvent me) {
-
         if (start_flg == false) {
             blink();
 //                Set Background Music
@@ -588,5 +723,31 @@ public class MainActivity extends AppCompatActivity {
         Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
         bubble.startAnimation(animation);
     }
+
+    public void triviaShow() {
+
+        // Random Call on Trivia in different class
+        Random random = new Random();
+        int triviaSize = Trivia.trivias.length;
+        int randomNum = (int) (Math.random() * triviaSize);
+        Log.i(TRIVIA, Integer.toString(randomNum));
+
+        //
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+        View mView = getLayoutInflater().inflate(R.layout.trivia, null);
+
+        // TextView for Trivia
+        TextView triviaView = (TextView) mView.findViewById(R.id.textView);
+
+        // Fetching info in Trivia class
+        triviaView.setText(Trivia.trivias[randomNum]);
+        mBuilder.setView(mView);
+        AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+        //Toast for Play
+        Toast.makeText(MainActivity.this,"Tap or Press Back to Play", Toast.LENGTH_SHORT).show();
+    }
+
 
 }

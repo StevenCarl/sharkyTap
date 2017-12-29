@@ -87,6 +87,8 @@ public class ResultActivity extends AppCompatActivity {
         }, 2000);
         twice = true;
     }
+
+
 }
 
 
