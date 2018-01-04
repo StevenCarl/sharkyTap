@@ -37,8 +37,8 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
@@ -99,6 +99,15 @@
         android:textColor="@android:color/white"
         android:textSize="15sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:text="All rights reserved 2018"
+        android:layout_marginTop="@dimen/twenty_dp"
+        android:textColor="@android:color/white"
+        android:fontFamily="@font/montserrat"/>
 
 </LinearLayout>
 

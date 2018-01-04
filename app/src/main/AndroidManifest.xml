@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cjignacio.tapsharky">
 
+    <supports-screens
+        android:xlargeScreens="true"
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true">
+    </supports-screens>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -36,9 +43,6 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
-
-        <activity android:name=".howto" />
-        <activity android:name=".how" />
         <activity android:name=".OnBoardingAppActivity" />
     </application>
 
