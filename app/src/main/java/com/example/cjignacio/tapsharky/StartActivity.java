@@ -34,17 +34,7 @@ public class StartActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                myDialog.setContentView(R.layout.activity_settings);
-                txtclose = (TextView) myDialog.findViewById(R.id.closetxt);
-                btnSave = (Button) myDialog.findViewById(R.id.saveBtn);
-                txtclose.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        myDialog.dismiss();
-                    }
-                });
-                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                myDialog.show();
+                  ShowPopup();
 //                if (mp.isPlaying()) {
 //                    mp.pause();
 //                    play.setBackgroundResource(R.drawable.mute);
@@ -57,6 +47,25 @@ public class StartActivity extends AppCompatActivity {
         });
 
     }
+
+
+    // Settings button
+    private void ShowPopup() {
+        myDialog.setContentView(R.layout.activity_settings);
+        txtclose = (TextView) myDialog.findViewById(R.id.closetxt);
+        btnSave = (Button) myDialog.findViewById(R.id.saveBtn);
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+
+
+
     // Double Backpress will exit the app
     boolean twice = false;
 
