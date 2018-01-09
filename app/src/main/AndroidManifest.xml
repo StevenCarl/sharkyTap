@@ -3,11 +3,10 @@
     package="com.example.cjignacio.tapsharky">
 
     <supports-screens
-        android:xlargeScreens="true"
-        android:smallScreens="true"
+        android:largeScreens="true"
         android:normalScreens="true"
-        android:largeScreens="true">
-    </supports-screens>
+        android:smallScreens="true"
+        android:xlargeScreens="true"></supports-screens>
 
     <application
         android:allowBackup="true"
@@ -21,6 +20,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -34,15 +34,16 @@
         <activity android:name=".DonateActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <activity android:name=".OnBoardingAppActivity" />
     </application>
 

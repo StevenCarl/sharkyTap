@@ -20,4 +20,8 @@
     <color name="colorWhite">#ffffff</color>
 
     <color name="colorGreen">#285943</color>
+
+    <color name="colorSettings">#dae9f4</color>
+
+    <color name="colorSwitch">#75D701</color>
 </resources>

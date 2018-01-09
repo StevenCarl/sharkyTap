@@ -8,8 +8,6 @@
     android:orientation="vertical"
     android:background="@drawable/home"
     tools:context="com.example.cjignacio.tapsharky.StartActivity">
-
-
     <Button
         android:id="@+id/button_play"
         android:layout_width="30dp"
@@ -17,7 +15,7 @@
         android:layout_gravity="left"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/music"/>
+        android:background="@drawable/settings"/>
 
     <!-- For Donation -->
     <Button
