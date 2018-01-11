@@ -25,6 +25,7 @@
         android:textStyle="bold" />
 
     <Button
+        android:id="@+id/resetSettingsBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="5dp"
@@ -75,6 +76,7 @@
                 android:background="@drawable/musicaly"
                 />
             <Switch
+                android:id="@+id/musicSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -94,6 +96,7 @@
                 android:background="@drawable/audio"
                 />
             <Switch
+                android:id="@+id/soundSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -113,6 +116,7 @@
                 android:background="@drawable/bulb"
                 />
             <Switch
+                android:id="@+id/triviaSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

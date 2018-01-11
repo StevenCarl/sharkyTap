@@ -1,12 +1,15 @@
 package com.example.cjignacio.tapsharky;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
@@ -117,23 +120,23 @@ public class MainActivity extends AppCompatActivity {
     private boolean start_flg = false;
     private boolean pause_flg = false;
 
-    //Log
-    private static final String TRIVIA = "triviaTag";
-
     private CountDownTimer countDownTimer;
 
     private static final long MINUTE = 1;
     private static final long MILLIS = MINUTE * 1000 * 60;
 
     MediaPlayer sp;
-
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sound = new SoundPlayer(this);
+        preferences = this.getSharedPreferences("com.example.cjignacio.tapsharky",
+                Context.MODE_PRIVATE);
+
+        sound = new SoundPlayer(this, preferences.getBoolean("sound", true));
 
         scoreLabel = (TextView) findViewById(R.id.scoreLabel);
         startLabel = (TextView) findViewById(R.id.startLabel);
@@ -232,7 +235,10 @@ public class MainActivity extends AppCompatActivity {
 //        Log.v("SPEED_FISHY2",fishy2Speed+"");
 //        Log.v("SPEED_POISON",poisonSpeed+"");
 
-        triviaShow();
+        if (preferences.getBoolean("trivia", true)) {
+            triviaShow();
+        }
+
         scoreLabel.setText("Score: 0");
         createTimer();
 
@@ -649,8 +655,11 @@ public class MainActivity extends AppCompatActivity {
 //                player.setLooping(true);
 //                player.StartActivity();
             sp = MediaPlayer.create(MainActivity.this, R.raw.play);
-            sp.start();
             sp.setLooping(true);
+
+            if (preferences.getBoolean("music", true)) {
+                sp.start();
+            }
 
             start_flg = true;
                  /* Why get frame height and box height here?
@@ -727,11 +736,8 @@ public class MainActivity extends AppCompatActivity {
     public void triviaShow() {
 
         // Random Call on Trivia in different class
-        Random random = new Random();
         int triviaSize = Trivia.trivias.length;
         int randomNum = (int) (Math.random() * triviaSize);
-        Log.i(TRIVIA, Integer.toString(randomNum));
-
         //
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.trivia, null);

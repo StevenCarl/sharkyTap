@@ -18,8 +18,11 @@ public class SoundPlayer {
     private static SoundPool soundPool;
     private static int hitSound;
     private static int eatSound;
+    private boolean isSoundOn = true;
 
-    public SoundPlayer (Context context){
+    public SoundPlayer (Context context, boolean isSoundOn){
+
+        this.isSoundOn = isSoundOn;
 
         // Sound pool is deprecated for Android version 21. (Lollipop)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
@@ -40,17 +43,17 @@ public class SoundPlayer {
         }
 
 
-
         hitSound = soundPool.load(context, R.raw.over,1);
         eatSound = soundPool.load(context, R.raw.chomp,1);
     }
 
     public void playhitSound(){
-
         //play(int soundID, float leftVolume, float rightVolume, int priority, int loop, float rate)
-        soundPool.play(hitSound,1.0f,1.0f,1,0,1.0f);
+        if (isSoundOn)
+            soundPool.play(hitSound,1.0f,1.0f,1,0,1.0f);
     }
     public void playeatSound(){
-        soundPool.play(eatSound,1.0f,1.0f,1,0,1.0f);
+        if (isSoundOn)
+            soundPool.play(eatSound,1.0f,1.0f,1,0,1.0f);
     }
 }
