@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/TapSharky.iml" filepath="$PROJECT_DIR$/TapSharky.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sharkyTap.iml" filepath="$PROJECT_DIR$/sharkyTap.iml" />
+      <module fileurl="file://C:\Users\CJIgnacio\AndroidStudioProjects\TapSharky\sharkyTap.iml" filepath="C:\Users\CJIgnacio\AndroidStudioProjects\TapSharky\sharkyTap.iml" />
     </modules>
   </component>
 </project>
