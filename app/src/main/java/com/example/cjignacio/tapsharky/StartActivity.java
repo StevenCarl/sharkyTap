@@ -76,6 +76,8 @@ public class StartActivity extends AppCompatActivity {
         soundSwitch = myDialog.findViewById(R.id.soundSwitch);
         triviaSwitch = myDialog.findViewById(R.id.triviaSwitch);
 
+
+
         getSavedSettings();
 
         txtclose.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +136,6 @@ public class StartActivity extends AppCompatActivity {
                 .putBoolean("sound", soundSwitch.isChecked())
                 .putBoolean("trivia", triviaSwitch.isChecked())
                 .apply();
-
     }
 
     private void startMusic() {
@@ -145,7 +146,6 @@ public class StartActivity extends AppCompatActivity {
                 mp.pause();
         }
     }
-
 
     // Double Backpress will exit the app
     boolean twice = false;
