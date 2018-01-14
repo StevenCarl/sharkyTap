@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,9 @@ public class ResultActivity extends AppCompatActivity {
         TextView scoreLabel = (TextView) findViewById(R.id.scoreLabel);
         TextView highScoreLabel = (TextView) findViewById(R.id.highScoreLabel);
         playAgainLabel = (TextView) findViewById(R.id.playAgainLabel);
+
+        final Animation an = AnimationUtils.loadAnimation(getBaseContext(),R.anim.blink);
+        playAgainLabel.startAnimation(an);
 
         int score = getIntent().getIntExtra("SCORE",0);
         scoreLabel.setText(score + "");

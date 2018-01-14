@@ -412,7 +412,7 @@ public class MainActivity extends AppCompatActivity {
         fishy7.setY(fishy7Y);
 
         //Fishy8
-        fishy8X -= fishy5Speed;
+        fishy8X -= fishy8Speed;
         if (fishy8X < 0) {
             fishy8X = screenWidth + 900;
             fishy8Y = (int) Math.floor(Math.random() * (frameHeight - fishy8.getHeight()));
@@ -618,7 +618,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-        //Poison
+        //Puffer
         int pufferCenterX = pufferX + puffer.getWidth() / 2;
         int pufferCenterY = pufferY + puffer.getHeight() / 2;
 

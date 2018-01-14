@@ -40,7 +40,7 @@ public class SliderAdapter extends PagerAdapter {
     };
 
     public String [] slide_descs ={
-            "To StartActivity the game TAP anywhere in the screen, HOLD to SWIM UP and RELEASE to SWIM DOWN",
+            "To start the game TAP anywhere in the screen, HOLD to SWIM UP and RELEASE to SWIM DOWN",
             "To acquire points eat the fishes, DIFFERENT FISH comes with DIFFERENT POINTS",
             "To avoid game over DO NOT EAT OR BUMP to poison bottles and puffer fishes",
             "To gain more points just EAT but OBSERVE the 1 MINUTE TIMER if it runs out its over. "
