@@ -70,11 +70,12 @@
             android:layout_width="1dp"
             android:layout_height="100dp"
             android:layout_weight="1">
+
             <ImageView
+                android:id="@+id/musicImageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/musicaly"
-                />
+                android:src="@drawable/musicaly" />
             <Switch
                 android:id="@+id/musicSwitch"
                 android:layout_width="wrap_content"
@@ -90,11 +91,12 @@
             android:layout_width="1dp"
             android:layout_height="100dp"
             android:layout_weight="1">
+
             <ImageView
+                android:id="@+id/soundImageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/audio"
-                />
+                android:src="@drawable/audio" />
             <Switch
                 android:id="@+id/soundSwitch"
                 android:layout_width="wrap_content"
@@ -110,11 +112,12 @@
             android:layout_width="1dp"
             android:layout_height="100dp"
             android:layout_weight="1">
+
             <ImageView
+                android:id="@+id/triviaImageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/bulb"
-                />
+                android:src="@drawable/bulb" />
             <Switch
                 android:id="@+id/triviaSwitch"
                 android:layout_width="wrap_content"

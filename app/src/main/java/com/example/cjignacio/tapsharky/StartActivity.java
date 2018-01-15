@@ -10,9 +10,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -27,6 +27,7 @@ public class StartActivity extends AppCompatActivity {
     Button btnSave, resetSettingsBtn;
     Switch musicSwitch, soundSwitch, triviaSwitch;
     SharedPreferences settingsPreferences;
+    ImageView musicImageView, soundImageView, triviaImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class StartActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                  ShowPopup();
+                ShowPopup();
 //                if (mp.isPlaying()) {
 //                    mp.pause();
 //                    play.setBackgroundResource(R.drawable.mute);
@@ -76,13 +77,16 @@ public class StartActivity extends AppCompatActivity {
         soundSwitch = myDialog.findViewById(R.id.soundSwitch);
         triviaSwitch = myDialog.findViewById(R.id.triviaSwitch);
 
-
+        musicImageView = myDialog.findViewById(R.id.musicImageView);
+        soundImageView = myDialog.findViewById(R.id.soundImageView);
+        triviaImageView = myDialog.findViewById(R.id.triviaImageView);
 
         getSavedSettings();
 
         txtclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getSavedSettings();
                 myDialog.dismiss();
             }
         });
@@ -95,6 +99,32 @@ public class StartActivity extends AppCompatActivity {
                 myDialog.dismiss();
 
                 startMusic();
+            }
+        });
+
+        musicSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    mp.start();
+                } else {
+                    mp.pause();
+                }
+                changeImageSettings();
+            }
+        });
+
+        soundSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                changeImageSettings();
+            }
+        });
+
+        triviaSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                changeImageSettings();
             }
         });
 
@@ -126,6 +156,25 @@ public class StartActivity extends AppCompatActivity {
         musicSwitch.setChecked(isMusicOn);
         soundSwitch.setChecked(isSoundOn);
         triviaSwitch.setChecked(isTriviaOn);
+
+        changeImageSettings();
+
+    }
+
+    private void changeImageSettings() {
+
+        musicImageView.setImageResource(R.drawable.quiet);
+        soundImageView.setImageResource(R.drawable.mute);
+        triviaImageView.setImageResource(R.drawable.off);
+
+        if (musicSwitch.isChecked())
+            musicImageView.setImageResource(R.drawable.musicaly);
+
+        if (soundSwitch.isChecked())
+            soundImageView.setImageResource(R.drawable.audio);
+
+        if (triviaSwitch.isChecked())
+            triviaImageView.setImageResource(R.drawable.bulb);
 
     }
 
