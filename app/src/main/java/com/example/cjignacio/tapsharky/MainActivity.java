@@ -755,5 +755,19 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this,"Tap or Press Back to Play", Toast.LENGTH_SHORT).show();
     }
 
-
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//    }
 }
+
+
+
+
+
+

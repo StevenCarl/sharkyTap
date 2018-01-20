@@ -20,14 +20,15 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
+            android:launchMode="singleTop"
             android:name=".ResultActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:launchMode="singleTop"
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".HighscoreActivity" />
@@ -35,7 +36,6 @@
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
