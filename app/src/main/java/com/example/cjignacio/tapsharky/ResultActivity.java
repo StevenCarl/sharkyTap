@@ -44,7 +44,7 @@ public class ResultActivity extends AppCompatActivity {
             //Save
             SharedPreferences.Editor editor = settings.edit();
             editor.putInt("HIGH_SCORE",score);
-            editor.commit();
+            editor.apply();
         } else {
             highScoreLabel.setText("High Score:" + highScore);
         }
@@ -52,7 +52,7 @@ public class ResultActivity extends AppCompatActivity {
 
     public boolean onTouchEvent(MotionEvent me){
 
-        if (start_flg == false){
+        if (!start_flg){
             start_flg = true;
             playAgainLabel.setVisibility(View.INVISIBLE);
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
@@ -77,7 +77,7 @@ public class ResultActivity extends AppCompatActivity {
     boolean twice = false;
     @Override
     public void onBackPressed() {
-        if (twice == true){
+        if (twice){
             Intent intent = new Intent(getApplicationContext(), StartActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);

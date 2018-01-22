@@ -233,21 +233,19 @@ public class StartActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), OnBoardingAppActivity.class));
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (settingsPreferences.getBoolean("music", true)) {
-            mp.pause();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (settingsPreferences.getBoolean("music",true)){
-            mp.start();
-        }
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        if (settingsPreferences.getBoolean("music", true)) {
+//            mp.pause();
+//        }
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        if (settingsPreferences.getBoolean("music",true)){
+//            mp.start();
+//        }
+//
 }
-
-

@@ -9,105 +9,141 @@
     android:background="@drawable/home"
     tools:context="com.example.cjignacio.tapsharky.StartActivity">
 
-
-    <Button
-        android:id="@+id/button_play"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="left"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/music"/>
-
-    <!-- For Donation -->
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:layout_gravity="right"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="-60dp"
-        android:background="@drawable/button_donate"
-        android:drawableRight="@drawable/heart_large"
-        android:fontFamily="@font/montserrat"
-        android:text="   Donate"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"
-        android:onClick="donateNow"/>
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        app:srcCompat="@drawable/logo" />
-
-    <!-- For Swimming -->
-    <Button
-        android:id="@+id/swim"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/button_file"
-        android:fontFamily="@font/montserrat"
-        android:onClick="startGame"
-        android:text="Swim"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <!-- For How to -->
-    <Button
-        android:onClick="howTo"
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/button_file"
-        android:fontFamily="@font/montserrat"
-        android:text="How to play"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <!-- For Rating -->
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/button_file"
-        android:fontFamily="@font/montserrat"
-        android:text="Rate"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <!-- For High Score -->
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/button_hs"
-        android:fontFamily="@font/montserrat"
-        android:onClick="scoreHigh"
-        android:text="High Score"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="25sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="All rights reserved 2018"
-        android:layout_marginTop="@dimen/twenty_dp"
-        android:textColor="@android:color/white"
-        android:fontFamily="@font/montserrat"/>
+        >
+        <!-- Settings -->
+        <Button
+            android:id="@+id/button_play"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/settings"
+            />
+
+        <!-- For Donation -->
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/button_play"
+            android:layout_alignBottom="@+id/button_play"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="left"
+            android:layout_marginEnd="26dp"
+            android:background="@drawable/button_donate"
+            android:drawableRight="@drawable/love"
+            android:fontFamily="@font/montserrat"
+            android:onClick="donateNow"
+            android:paddingBottom="10dp"
+            android:paddingEnd="5dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:text="   Donate"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            app:srcCompat="@drawable/logo" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <!-- For Swimming -->
+        <Button
+            android:id="@+id/swim"
+            android:layout_width="180dp"
+            android:padding="20dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/button_file"
+            android:fontFamily="@font/montserrat"
+            android:onClick="startGame"
+            android:text="Swim"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- For How to -->
+        <Button
+            android:layout_width="180dp"
+            android:padding="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="130dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_file"
+            android:fontFamily="@font/montserrat"
+            android:onClick="howTo"
+            android:text="How to play"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- For Rating -->
+        <Button
+            android:layout_width="180dp"
+            android:padding="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="210dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/button_file"
+            android:fontFamily="@font/montserrat"
+            android:onClick="scoreHigh"
+            android:text="High Score"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- For High Score -->
+        <Button
+            android:layout_width="180dp"
+            android:padding="20dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="290dp"
+            android:background="@drawable/button_hs"
+            android:fontFamily="@font/montserrat"
+            android:text="Credits"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:id="@+id/button" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="72dp"
+            android:fontFamily="@font/montserrat"
+            android:text="All rights reserved 2018"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:id="@+id/textView2" />
+
+    </RelativeLayout>
 
 </LinearLayout>
 

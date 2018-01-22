@@ -429,7 +429,7 @@ public class MainActivity extends AppCompatActivity {
         fishy9.setX(fishy9X);
         fishy9.setY(fishy9Y);
 
-        //Fishy5
+        //Puffer
         pufferX -= pufferSpeed;
         if (pufferX < 0) {
             pufferX = screenWidth + 1000;
