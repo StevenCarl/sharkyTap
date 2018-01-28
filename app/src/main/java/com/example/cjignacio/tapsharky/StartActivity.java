@@ -233,6 +233,10 @@ public class StartActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), OnBoardingAppActivity.class));
     }
 
+    public void creditTo(View view){
+        startActivity(new Intent(getApplicationContext(),CreditsActivity.class));
+    }
+
 //    @Override
 //    protected void onPause() {
 //        super.onPause();

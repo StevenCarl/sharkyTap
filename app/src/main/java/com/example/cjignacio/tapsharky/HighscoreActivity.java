@@ -44,6 +44,7 @@ public class HighscoreActivity extends AppCompatActivity {
             highScoreLabel.setText("" + highScore);
         }
     }
+
     public void tryAgain(View view){
         startActivity(new Intent(getApplicationContext(),MainActivity.class));
         btnBeat.setOnClickListener(new View.OnClickListener() {

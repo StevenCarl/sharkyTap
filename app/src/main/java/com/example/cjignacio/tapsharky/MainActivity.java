@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView fishy9;
     private ImageView puffer;
     private ImageView poison;
+    private ImageView frozen;
     private ImageView bubble;
 
     //Moving Background Images
@@ -92,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
     private int pufferY;
     private int poisonX;
     private int poisonY;
+    private int frozenX;
+    private int frozenY;
 
     //Speed
     private int sharkSpeed;
@@ -106,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
     private int fishy9Speed;
     private int pufferSpeed;
     private int poisonSpeed;
+    private int frozenSpeed;
 
     // Score
     private int score = 0;
@@ -121,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean pause_flg = false;
 
     private CountDownTimer countDownTimer;
-
+    private boolean timeRunning;
     private static final long MINUTE = 1;
     private static final long MILLIS = MINUTE * 1000 * 60;
 
@@ -153,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
         fishy9 = (ImageView) findViewById(R.id.fishy9);
         puffer = (ImageView) findViewById(R.id.puffer);
         poison = (ImageView) findViewById(R.id.poison);
+        frozen = (ImageView) findViewById(R.id.freeze);
 
         //Moving Background Call
         silfish2 = (ImageView) findViewById(R.id.silfish2);
@@ -207,6 +213,8 @@ public class MainActivity extends AppCompatActivity {
         puffer.setY(-80);
         poison.setX(-80);
         poison.setY(-80);
+        frozen.setX(-80);
+        frozen.setY(-80);
 
         //Background Image positioning
         silfish2.setX(-80.0F);
@@ -228,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
         fishy9Speed = Math.round(screenWidth / 54F);      // 768/60= 12.8 => 14
         poisonSpeed = Math.round(screenWidth / 45F);      // 768/45 = 17.06...=>17
         pufferSpeed = Math.round(screenWidth / 60F);      // 768/45 = 17.06...=>17
-
+        frozenSpeed = Math.round(screenWidth / 40F);      // 768/45 = 17.06...=>17
 
 //        Log.v("SPEED_SHARK",sharkSpeed+"");
 //        Log.v("SPEED_FISHY1",fishy1Speed+"");
@@ -240,7 +248,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         scoreLabel.setText("Score: 0");
+
         createTimer();
+
 
     }
 
@@ -304,6 +314,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+
+
     private void createTimer() {
 
         final DecimalFormat df = new DecimalFormat("00");
@@ -324,16 +338,23 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                timeRunning = false;
                 Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
                 intent.putExtra("SCORE", score);
-
                 startActivity(intent);
-
-
+                timer.cancel();
+                sp.stop();
+                sound.playhitSound();
             }
         };
-
     }
+
+
+    private void pauseTimer(){
+        countDownTimer.cancel();
+        timeRunning= false;
+    }
+
 
     public void changePos() {
 
@@ -438,6 +459,16 @@ public class MainActivity extends AppCompatActivity {
         puffer.setX(pufferX);
         puffer.setY(pufferY);
 
+        //Freeze Timer
+        frozenX -= frozenSpeed;
+        if (frozenX < 0) {
+            frozenX = screenWidth + 2700;
+            frozenY = (int) Math.floor(Math.random() * (frameHeight - frozen.getHeight()));
+        }
+        frozen.setX(frozenX);
+        frozen.setY(frozenY);
+
+
         // Move Sharky
 
         if (action_flg == true) {
@@ -456,8 +487,18 @@ public class MainActivity extends AppCompatActivity {
         shark.setY(sharkY);
 
         scoreLabel.setText("Score: " + score);
+//        changeCharacter();
 
     }
+
+    // Change character if it reaches the required score
+//    private void changeCharacter(){
+//        if (score > 200){
+//            shark.setImageResource(R.drawable.daddyshark);
+//            Log.v("ChangeImage", String.valueOf(shark));
+//        }
+//    }
+
 
     public void hitCheck() {
         // If the center of the fishy is at the box it counts as a hit...
@@ -593,58 +634,73 @@ public class MainActivity extends AppCompatActivity {
             sound.playeatSound();
         }
 
-        //Poison
-        int poisonCenterX = poisonX + poison.getWidth() / 2;
-        int poisonCenterY = poisonY + poison.getHeight() / 2;
+        //Freeze Timer
 
-        if (0 <= poisonCenterX && poisonCenterX <= sharkSize &&
-                sharkY <= poisonCenterY && poisonCenterY <= sharkY + sharkSize) {
+        int frozenCenterX = frozenX + frozen.getWidth() / 2;
+        int frozenCenterY = frozenY + frozen.getHeight() / 2;
 
-            //Temporary!
-            //            score +=10;
-            //            poisonX = -10;
-            timer.cancel();
-            // timer = null;
-
-            sound.playhitSound();
-
-            sp.stop();
-
-            // Show ResultActivity
-            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-            intent.putExtra("SCORE", score);
-
-            startActivity(intent);
-
+        // 0 <= fishyCenterX <= sharkWidth
+        // sharkY <= fishyCenterX <= sharkY + sharkHeight
+        if (0 <= frozenCenterX && frozenCenterX <= sharkSize &&
+                sharkY <= frozenCenterY && frozenCenterY <= sharkY + sharkSize) {
+            frozenX = -10;
+            sound.playeatSound();
         }
 
-        //Puffer
-        int pufferCenterX = pufferX + puffer.getWidth() / 2;
-        int pufferCenterY = pufferY + puffer.getHeight() / 2;
+            //Poison
+            int poisonCenterX = poisonX + poison.getWidth() / 2;
+            int poisonCenterY = poisonY + poison.getHeight() / 2;
 
-        if (0 <= pufferCenterX && pufferCenterX <= sharkSize &&
-                sharkY <= pufferCenterY && pufferCenterY <= sharkY + sharkSize) {
+            if (0 <= poisonCenterX && poisonCenterX <= sharkSize &&
+                    sharkY <= poisonCenterY && poisonCenterY <= sharkY + sharkSize) {
 
-            //Temporary!
-            //            score +=10;
-            //            poisonX = -10;
-            timer.cancel();
-            // timer = null;
+                //Temporary!
+                //            score +=10;
+                //            poisonX = -10;
+                timer.cancel();
+                // timer = null;
 
-            sound.playhitSound();
+                sound.playhitSound();
 
-            sp.stop();
+                sp.stop();
 
-            // Show ResultActivity
-            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-            intent.putExtra("SCORE", score);
+                // Show ResultActivity
+                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                intent.putExtra("SCORE", score);
+                startActivity(intent);
 
-            startActivity(intent);
+                countDownTimer.cancel();
+
+            }
+
+            //Puffer
+            int pufferCenterX = pufferX + puffer.getWidth() / 2;
+            int pufferCenterY = pufferY + puffer.getHeight() / 2;
+
+            if (0 <= pufferCenterX && pufferCenterX <= sharkSize &&
+                    sharkY <= pufferCenterY && pufferCenterY <= sharkY + sharkSize) {
+
+                //Temporary!
+                //            score +=10;
+                //            poisonX = -10;
+                timer.cancel();
+                // timer = null;
+
+                sound.playhitSound();
+
+                sp.stop();
+
+                // Show ResultActivity
+                Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
+                intent.putExtra("SCORE", score);
+
+                startActivity(intent);
+
+                countDownTimer.cancel();
+
+            }
 
         }
-
-
-    }
 
 
     public boolean onTouchEvent(MotionEvent me) {
@@ -738,14 +794,15 @@ public class MainActivity extends AppCompatActivity {
         // Random Call on Trivia in different class
         int triviaSize = Trivia.trivias.length;
         int randomNum = (int) (Math.random() * triviaSize);
-        //
+
+        // Fetching info in Trivia class
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
         View mView = getLayoutInflater().inflate(R.layout.trivia, null);
 
         // TextView for Trivia
         TextView triviaView = (TextView) mView.findViewById(R.id.textView);
 
-        // Fetching info in Trivia class
+        // Random info fetched from Trivia class
         triviaView.setText(Trivia.trivias[randomNum]);
         mBuilder.setView(mView);
         AlertDialog dialog = mBuilder.create();
@@ -764,6 +821,7 @@ public class MainActivity extends AppCompatActivity {
 //    protected void onResume() {
 //        super.onResume();
 //    }
+
 }
 
 

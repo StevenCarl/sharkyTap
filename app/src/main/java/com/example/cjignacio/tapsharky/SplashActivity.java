@@ -21,7 +21,6 @@ public class SplashActivity extends Activity {
 
         final ImageView iv = (ImageView) findViewById(R.id.imageView2);
         final Animation an = AnimationUtils.loadAnimation(getBaseContext(),R.anim.rotate);
-        final Animation an2 = AnimationUtils.loadAnimation(getBaseContext(),R.anim.fade_out);
 
             iv.startAnimation(an);
             an.setAnimationListener(new Animation.AnimationListener() {
