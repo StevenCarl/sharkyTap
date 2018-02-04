@@ -1,7 +1,9 @@
 package com.example.cjignacio.tapsharky;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -10,9 +12,11 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -233,23 +237,8 @@ public class StartActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), OnBoardingAppActivity.class));
     }
 
-    public void creditTo(View view){
-        startActivity(new Intent(getApplicationContext(),CreditsActivity.class));
+    public void creditTo(View view) {
+        startActivity(new Intent(getApplicationContext(), CreditsActivity.class));
     }
 
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        if (settingsPreferences.getBoolean("music", true)) {
-//            mp.pause();
-//        }
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        if (settingsPreferences.getBoolean("music",true)){
-//            mp.start();
-//        }
-//
 }

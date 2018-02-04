@@ -14,10 +14,12 @@ import android.provider.MediaStore;
 public class SoundPlayer {
 
     private AudioAttributes audioAttributes;
-    final int SOUND_POOL_MAX = 2;
+    final int SOUND_POOL_MAX = 4;
     private static SoundPool soundPool;
     private static int hitSound;
     private static int eatSound;
+    private static int freezeSound;
+    private static int resetSound;
     private boolean isSoundOn = true;
 
     public SoundPlayer (Context context, boolean isSoundOn){
@@ -45,6 +47,8 @@ public class SoundPlayer {
 
         hitSound = soundPool.load(context, R.raw.over,1);
         eatSound = soundPool.load(context, R.raw.chomp,1);
+        freezeSound = soundPool.load(context,R.raw.icy,1);
+        resetSound = soundPool.load(context,R.raw.tictac,1);
     }
 
     public void playhitSound(){
@@ -55,6 +59,14 @@ public class SoundPlayer {
     public void playeatSound(){
         if (isSoundOn)
             soundPool.play(eatSound,1.0f,1.0f,1,0,1.0f);
+    }
+    public void playicySound(){
+        if (isSoundOn)
+            soundPool.play(freezeSound,1.0f,1.0f,1,0,1.0f);
+    }
+    public void playresetSound(){
+        if (isSoundOn)
+            soundPool.play(resetSound,5.0f,5.0f,1,0,1.0f);
     }
 
 }
