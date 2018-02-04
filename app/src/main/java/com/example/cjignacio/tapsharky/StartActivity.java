@@ -240,5 +240,5 @@ public class StartActivity extends AppCompatActivity {
     public void creditTo(View view) {
         startActivity(new Intent(getApplicationContext(), CreditsActivity.class));
     }
-
+    
 }

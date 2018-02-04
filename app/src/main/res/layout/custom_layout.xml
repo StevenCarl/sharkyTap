@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    
+    <TextView
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center_vertical"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:text="Sharky Wants to know if..."
+        android:fontFamily="@font/montserrat"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"/>
+        
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/body"
+        android:paddingBottom="16dp"
+        android:layout_below="@+id/confirm"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        >
+    
+        <ImageView
+            android:id="@+id/alert_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ishark"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/alert_image"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/link"
+            android:text="Continue Playing ? ? ?"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:fontFamily="@font/montserrat"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>
