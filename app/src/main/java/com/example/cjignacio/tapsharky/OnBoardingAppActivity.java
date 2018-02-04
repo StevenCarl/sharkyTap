@@ -1,5 +1,6 @@
 package com.example.cjignacio.tapsharky;
 
+import android.media.MediaPlayer;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,6 +23,9 @@ public class OnBoardingAppActivity extends AppCompatActivity {
     private Button mBackBtn;
 
     private int mCurrentPage;
+
+    MediaPlayer mp;
+    boolean isMusicOn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,17 @@ public class OnBoardingAppActivity extends AppCompatActivity {
                  mSlideViewPager.setCurrentItem(mCurrentPage -1);
             }
         });
+
+        // For Background Music
+        mp = MediaPlayer.create(OnBoardingAppActivity.this, R.raw.babyshark);
+        mp.setLooping(true);
+
+        isMusicOn = getIntent().getBooleanExtra("isMusicOn", true);
+
+        if (isMusicOn) {
+            mp.start();
+        }
+
     }
 
     public void addDotsIndicator(int position){
@@ -128,4 +143,22 @@ public class OnBoardingAppActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mp.isPlaying())
+            mp.pause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (isMusicOn) {
+            mp.start();
+        }
+    }
 }

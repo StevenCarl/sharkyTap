@@ -2,6 +2,7 @@ package com.example.cjignacio.tapsharky;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -24,6 +25,8 @@ public class CreditsActivity extends AppCompatActivity {
 
     Animation in,out;
     ViewFlipper viewFlipper;
+    MediaPlayer mp;
+    boolean isMusicOn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -36,7 +39,35 @@ public class CreditsActivity extends AppCompatActivity {
         viewFlipper.setOutAnimation(out);
         viewFlipper.setFlipInterval(5000);
         viewFlipper.setAutoStart(true);
+
+        // For Background Music
+        mp = MediaPlayer.create(CreditsActivity.this, R.raw.babyshark);
+        mp.setLooping(true);
+
+        isMusicOn = getIntent().getBooleanExtra("isMusicOn", true);
+
+        if (isMusicOn) {
+            mp.start();
+        }
+
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mp.isPlaying())
+            mp.pause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (isMusicOn) {
+            mp.start();
+        }
+    }
 
 }

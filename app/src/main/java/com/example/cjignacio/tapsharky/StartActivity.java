@@ -1,9 +1,7 @@
 package com.example.cjignacio.tapsharky;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -12,11 +10,9 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -32,6 +28,7 @@ public class StartActivity extends AppCompatActivity {
     Switch musicSwitch, soundSwitch, triviaSwitch;
     SharedPreferences settingsPreferences;
     ImageView musicImageView, soundImageView, triviaImageView;
+    Intent playbackServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,26 +39,20 @@ public class StartActivity extends AppCompatActivity {
                 Context.MODE_PRIVATE);
 
         myDialog = new Dialog(this);
-        play = (Button) findViewById(R.id.button_play);
+        play = findViewById(R.id.button_play);
 
         // For Background Music
         mp = MediaPlayer.create(StartActivity.this, R.raw.babyshark);
         mp.setLooping(true);
+
+        //playbackServiceIntent = new Intent(this, BackgroundAudioService.class);
 
         startMusic();
 
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowPopup();
-//                if (mp.isPlaying()) {
-//                    mp.pause();
-//                    play.setBackgroundResource(R.drawable.mute);
-//                } else {
-//                    ;
-//                    mp.start();
-//                    play.setBackgroundResource(R.drawable.music);
-//                }
+                showPopup();
             }
         });
 
@@ -69,7 +60,7 @@ public class StartActivity extends AppCompatActivity {
 
 
     // Settings button
-    private void ShowPopup() {
+    private void showPopup() {
 
         myDialog.setContentView(R.layout.activity_settings);
 
@@ -226,19 +217,44 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void scoreHigh(View view) {
-        startActivity(new Intent(getApplicationContext(), HighscoreActivity.class));
+        Intent intent = new Intent(getApplicationContext(), HighscoreActivity.class);
+        intent.putExtra("isMusicOn", settingsPreferences.getBoolean("music", true));
+        startActivity(intent);
     }
 
     public void donateNow(View view) {
-        startActivity(new Intent(getApplicationContext(), DonateActivity.class));
+        Intent intent = new Intent(getApplicationContext(), DonateActivity.class);
+        intent.putExtra("isMusicOn", settingsPreferences.getBoolean("music", true));
+        startActivity(intent);
     }
 
     public void howTo(View view) {
-        startActivity(new Intent(getApplicationContext(), OnBoardingAppActivity.class));
+        Intent intent = new Intent(getApplicationContext(), OnBoardingAppActivity.class);
+        intent.putExtra("isMusicOn", settingsPreferences.getBoolean("music", true));
+        startActivity(intent);
     }
 
     public void creditTo(View view) {
-        startActivity(new Intent(getApplicationContext(), CreditsActivity.class));
+        Intent intent = new Intent(getApplicationContext(), CreditsActivity.class);
+        intent.putExtra("isMusicOn", settingsPreferences.getBoolean("music", true));
+        startActivity(intent);
     }
-    
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mp.isPlaying())
+            mp.pause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (settingsPreferences.getBoolean("music", true)) {
+            mp.start();
+        }
+    }
 }

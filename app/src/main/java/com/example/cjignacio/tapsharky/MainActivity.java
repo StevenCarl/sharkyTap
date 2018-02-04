@@ -1,21 +1,16 @@
 package com.example.cjignacio.tapsharky;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Point;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,16 +19,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DecimalFormat;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -148,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
     Handler setDelay;
     Runnable startDelay;
 
+    private boolean isGamePaused;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         puffer = (ImageView) findViewById(R.id.puffer);
         poison = (ImageView) findViewById(R.id.poison);
         frozen = (ImageView) findViewById(R.id.freeze);
-        reset= (ImageView) findViewById(R.id.timereset);
+        reset = (ImageView) findViewById(R.id.timereset);
 
         //Moving Background Call
         silfish2 = (ImageView) findViewById(R.id.silfish2);
@@ -257,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         poisonSpeed = Math.round(screenWidth / 45F);      // 768/45 = 17.06...=>17
         pufferSpeed = Math.round(screenWidth / 60F);      // 768/45 = 17.06...=>17
         frozenSpeed = Math.round(screenWidth / 40F);      // 768/45 = 17.06...=>17
-        resetSpeed = Math.round(screenWidth/ 40F);        // 768/45 = 17.06...=>17
+        resetSpeed = Math.round(screenWidth / 40F);        // 768/45 = 17.06...=>17
 
 
         if (preferences.getBoolean("trivia", true)) {
@@ -266,68 +258,17 @@ public class MainActivity extends AppCompatActivity {
 
         scoreLabel.setText("Score: 0");
 
-        createTimer();
-
     }
 
-//    // Power Up Buttons
-//    public void fAButton() {
-//        final FloatingActionButton mfab = (FloatingActionButton) findViewById(R.id.powerFAB);
-//        FloatingActionButton mfab1 = (FloatingActionButton) findViewById(R.id.freezeTimer);
-//        FloatingActionButton mfab2 = (FloatingActionButton) findViewById(R.id.resetTimer);
-//        final LinearLayout fab2 = (LinearLayout) findViewById(R.id.freezeLayout);
-//        final LinearLayout fab3 = (LinearLayout) findViewById(R.id.timeLayout);
-//        final Animation mshowAn = AnimationUtils.loadAnimation(MainActivity.this, R.anim.show);
-//        final Animation mhideAn = AnimationUtils.loadAnimation(MainActivity.this, R.anim.hide);
-//        final Animation mshowLayout = AnimationUtils.loadAnimation(MainActivity.this, R.anim.appear);
-//        final Animation mhideLayout = AnimationUtils.loadAnimation(MainActivity.this, R.anim.disappear);
-//        mfab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (fab2.getVisibility() == View.VISIBLE && fab3.getVisibility() == View.VISIBLE) {
-//                    fab2.setVisibility(View.GONE);
-//                    fab3.setVisibility(View.GONE);
-//                    fab2.startAnimation(mhideLayout);
-//                    fab3.startAnimation(mhideLayout);
-//                    mfab.startAnimation(mhideAn);
-//                } else {
-//                    fab2.setVisibility(View.VISIBLE);
-//                    fab3.setVisibility(View.VISIBLE);
-//                    mfab.startAnimation(mshowAn);
-//                    fab2.startAnimation(mshowLayout);
-//                    fab3.startAnimation(mshowLayout);
-//                }
-//            }
-//        });
-//        mfab1.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    pauseTimer();
-//                    fab2.startAnimation(mhideLayout);
-//                    fab3.startAnimation(mhideLayout);
-//                    mfab.startAnimation(mhideAn);
-//                }
-//            });
-//        mfab2.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    resetTimer();
-//                    fab2.startAnimation(mhideLayout);
-//                    fab3.startAnimation(mhideLayout);
-//                    mfab.startAnimation(mhideAn);
-//                }
-//            });
-//        }
-
-
     //Create CountDownTimer
-    private void createTimer(){
-        countDownTimer = new CountDownTimer(mTimeLeftInMillis,1000) {
+    private void startCountDownTimer() {
+        countDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 mTimeLeftInMillis = millisUntilFinished;
                 updateCountDownTimer();
             }
+
             @Override
             public void onFinish() {
                 timeRunning = false;
@@ -338,41 +279,30 @@ public class MainActivity extends AppCompatActivity {
                 sp.stop();
                 sound.playhitSound();
             }
-        };
+        }.start();
         timeRunning = true;
     }
 
     // Freeze Timer
-    private void pauseTimer(){
+    private void pauseTimer() {
         if (timeRunning) {
             countDownTimer.cancel();
-            startDelay = new Runnable() {
+            timeRunning = false;
+
+            new CountDownTimer(5000, 1000) {
                 @Override
-                public void run() {
-                    if (countDownTimer != null){
-                        countDownTimer.cancel();
-                    }
-                    countDownTimer = new CountDownTimer(mTimeLeftInMillis,1000) {
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-                            mTimeLeftInMillis = millisUntilFinished;
-                            updateCountDownTimer();
-                        }
-                        @Override
-                        public void onFinish() {
-                            timeRunning = false;
-                            Intent intent = new Intent(getApplicationContext(), ResultActivity.class);
-                            intent.putExtra("SCORE", score);
-                            startActivity(intent);
-                            timer.cancel();
-                            sp.stop();
-                            sound.playhitSound();
-                        }
-                    };
-                    countDownTimer.start();
+                public void onTick(long millisUntilFinished) {
+
                 }
-            };
-            setDelay.postDelayed(startDelay, 5000);
+
+                @Override
+                public void onFinish() {
+
+                    startCountDownTimer();
+                    timeRunning = true;
+                }
+            }.start();
+
         }
     }
 
@@ -385,35 +315,39 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     if (countDownTimer != null) {
                         mTimeLeftInMillis = MILLIS;
-                        updateCountDownTimer();
-                    }countDownTimer.start();
+                        //updateCountDownTimer();
+                    }
+                    startCountDownTimer();
                 }
             };
             setDelay.postDelayed(startDelay, 1000);
         }
     }
 
-   // CountDownTimer Format and initialization
-    private void updateCountDownTimer(){
-        int minutes = (int) (mTimeLeftInMillis /1000)/60;
-        int seconds = (int) (mTimeLeftInMillis /1000)%60;
-        String timeleftFormatted = String.format("%02d:%02d",minutes,seconds);
-        timeLabel.setText("Time:"+ timeleftFormatted);
+    // CountDownTimer Format and initialization
+    private void updateCountDownTimer() {
+        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
+        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+        String timeleftFormatted = String.format("%02d:%02d", minutes, seconds);
+        timeLabel.setText("Time:" + timeleftFormatted);
     }
 
     // Press twice to exit
     boolean twice = false;
 
+    private void goToStartActivity() {
+        Intent intent = new Intent(getApplicationContext(), StartActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+
+        System.exit(0);
+    }
+
     @Override
     public void onBackPressed() {
         if (twice == true) {
-
-            Intent intent = new Intent(getApplicationContext(), StartActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-
-            System.exit(0);
+            goToStartActivity();
         }
         Toast.makeText(MainActivity.this, "Press BACK again to Quit", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
@@ -553,23 +487,23 @@ public class MainActivity extends AppCompatActivity {
             puffer.setY(pufferY);
         }
 
-        //frozen
-            frozenX -= frozenSpeed;
-            if (frozenX < 0) {
-                frozenX = screenWidth + 5000;
-                frozenY = (int) Math.floor(Math.random() * (frameHeight - frozen.getHeight()));
-            }
-            frozen.setX(frozenX);
-            frozen.setY(frozenY);
+        //Frozen
+        frozenX -= frozenSpeed;
+        if (frozenX < 0) {
+            frozenX = screenWidth + 5000;
+            frozenY = (int) Math.floor(Math.random() * (frameHeight - frozen.getHeight()));
+        }
+        frozen.setX(frozenX);
+        frozen.setY(frozenY);
 
-        //reset
-            resetX -= frozenSpeed;
-            if (resetX < 0) {
-                resetX = screenWidth + 10000;
-                resetY = (int) Math.floor(Math.random() * (frameHeight - reset.getHeight()));
-            }
-            reset.setX(resetX);
-            reset.setY(resetY);
+        //Reset
+        resetX -= frozenSpeed;
+        if (resetX < 0) {
+            resetX = screenWidth + 10000;
+            resetY = (int) Math.floor(Math.random() * (frameHeight - reset.getHeight()));
+        }
+        reset.setX(resetX);
+        reset.setY(resetY);
 
         // Move Sharky
 
@@ -593,18 +527,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Change status of the ff: buttons and image resource
-//    private void changeCharacter(){
-//        if (score <= 500){
-//
-////            shark.setImageResource(R.drawable.daddyshark);
-////            Log.v("ChangeImage", String.valueOf(shark));
-//        }
-//    }
-
-
     public void hitCheck() {
-        // If the center of the fishy is at the box it counts as a hit...
 
         //Fishy1
 
@@ -622,7 +545,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Fishy2
-        if (score > 50 ) {
+        if (score > 50) {
             int fishy2CenterX = fishy2X + fishy2.getWidth() / 2;
             int fishy2CenterY = fishy2Y + fishy2.getHeight() / 2;
 
@@ -745,30 +668,30 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Frozen
-            int frozenCenterX = frozenX + frozen.getWidth() / 2;
-            int frozenCenterY = frozenY + frozen.getHeight() / 2;
-            // 0 <= fishyCenterX <= sharkWidth
-            // sharkY <= fishyCenterX <= sharkY + sharkHeight
-            if (0 <= frozenCenterX && frozenCenterX <= sharkSize &&
-                    sharkY <= frozenCenterY && frozenCenterY <= sharkY + sharkSize) {
-                pauseTimer();
-                frozenX = -10;
-                sound.playicySound();
-            }
+        int frozenCenterX = frozenX + frozen.getWidth() / 2;
+        int frozenCenterY = frozenY + frozen.getHeight() / 2;
+        // 0 <= fishyCenterX <= sharkWidth
+        // sharkY <= fishyCenterX <= sharkY + sharkHeight
+        if (0 <= frozenCenterX && frozenCenterX <= sharkSize &&
+                sharkY <= frozenCenterY && frozenCenterY <= sharkY + sharkSize) {
+            pauseTimer();
+            frozenX = -10;
+            sound.playicySound();
+        }
 
         // Reset
-            int resetCenterX = resetX + reset.getWidth() / 2;
-            int resetCenterY = resetY + reset.getHeight() / 2;
-            // 0 <= fishyCenterX <= sharkWidth
-            // sharkY <= fishyCenterX <= sharkY + sharkHeight
-            if (0 <= resetCenterX && resetCenterX <= sharkSize &&
-                    sharkY <= resetCenterY && resetCenterY <= sharkY + sharkSize) {
-                resetTimer();
-                frozenX = -10;
-                sound.playresetSound();
-            }
+        int resetCenterX = resetX + reset.getWidth() / 2;
+        int resetCenterY = resetY + reset.getHeight() / 2;
+        // 0 <= fishyCenterX <= sharkWidth
+        // sharkY <= fishyCenterX <= sharkY + sharkHeight
+        if (0 <= resetCenterX && resetCenterX <= sharkSize &&
+                sharkY <= resetCenterY && resetCenterY <= sharkY + sharkSize) {
+            resetTimer();
+            resetX = -10;
+            sound.playresetSound();
+        }
 
-            //Poison
+        //Poison
         if (score > 200) {
             int poisonCenterX = poisonX + poison.getWidth() / 2;
             int poisonCenterY = poisonY + poison.getHeight() / 2;
@@ -796,7 +719,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-            //Puffer
+        //Puffer
         if (score > 500) {
             int pufferCenterX = pufferX + puffer.getWidth() / 2;
             int pufferCenterY = pufferY + puffer.getHeight() / 2;
@@ -824,8 +747,99 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (isGamePaused) {
+
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+            View mView = getLayoutInflater().inflate(R.layout.custom_layout, null);
+            mBuilder.setView(mView);
+            mBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    resumeGameTimers();
+
+                }
+            });
+            mBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    goToStartActivity();
+
+                }
+            });
+
+            AlertDialog dialog = mBuilder.create();
+
+            dialog.show();
+
         }
 
+        isGamePaused = false;
+
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (timeRunning) {
+            timer.cancel();
+
+            countDownTimer.cancel();
+            timeRunning = false;
+
+            isGamePaused = true;
+
+            if (sp.isPlaying())
+                sp.pause();
+        }
+
+    }
+
+    private void resumeGameTimers() {
+
+        startCountDownTimer();
+
+        timeRunning = true;
+
+        timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        changePos();
+                    }
+                });
+            }
+        }, 0, 20);
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        changePosBackground();
+                    }
+                });
+            }
+        }, 0, 20);
+
+        if (preferences.getBoolean("music", true)) {
+            sp.start();
+        }
+    }
 
     public boolean onTouchEvent(MotionEvent me) {
         if (start_flg == false) {
@@ -849,7 +863,7 @@ public class MainActivity extends AppCompatActivity {
             // The box is a square (height and width) are same...
             sharkSize = shark.getHeight();
 
-            countDownTimer.start();
+            startCountDownTimer();
 
             startLabel.setVisibility(View.GONE);
 
@@ -930,18 +944,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
 
         //Toast for Play
-        Toast.makeText(MainActivity.this,"Tap or Press Back to Play", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Tap or Press Back to Play", Toast.LENGTH_SHORT).show();
     }
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//    }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//    }
 
 }
 

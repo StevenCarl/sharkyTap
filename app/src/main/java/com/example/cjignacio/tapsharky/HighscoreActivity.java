@@ -15,6 +15,8 @@ public class HighscoreActivity extends AppCompatActivity {
     Button btnBeat;
     SharedPreferences settingsPreferences;
     MediaPlayer mp;
+    boolean isMusicOn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,17 @@ public class HighscoreActivity extends AppCompatActivity {
         } else {
             highScoreLabel.setText("" + highScore);
         }
+
+        // For Background Music
+        mp = MediaPlayer.create(HighscoreActivity.this, R.raw.babyshark);
+        mp.setLooping(true);
+
+        isMusicOn = getIntent().getBooleanExtra("isMusicOn", true);
+
+        if (isMusicOn) {
+            mp.start();
+        }
+
     }
 
     public void tryAgain(View view){
@@ -68,4 +81,23 @@ public class HighscoreActivity extends AppCompatActivity {
     public void scoreHigh(View view){
         startActivity(new Intent(getApplicationContext(), HighscoreActivity.class));
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if (mp.isPlaying())
+            mp.pause();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (isMusicOn) {
+            mp.start();
+        }
+    }
+
 }
